@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<nav class="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 w-full z-50 ">
+  <div class="max-w-screen-xl flex flex-wrap items-center mx-auto px-4">
+    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="assets/imgs/product-icon.jpg" class="h-10" alt="FreshCart Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">FreshCart</span>
+    </a>
+    <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="md:flex md:w-auto ml-auto ms-10">
+    <ul class="flex gap-2  text-sm font-semibold text-gray-400" [class.active]="isMenuOpen"*ngIf="!showAuthLinks">
+        <li><a routerLink="/home" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75"> Home</a></li>
+        <li><a routerLink="/cart" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Cart</a></li>
+        <li><a routerLink="/products" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Products</a></li>
+        <li><a routerLink="/brands" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Brands</a></li>
+    </ul>
+    </div>
+    <button type="button" class="inline-flex absolute right-0 items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" (click)="toggleMenu()">
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+      </svg>
+    </button>
+    <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="md:flex md:w-auto ml-auto">
+      <ul class="flex flex-col md:flex-row items-center gap-3 p-4 md:p-0  border border-gray-100 text-sm">
+
+        <li class="flex gap-3" [style.display]="isMenuOpen ? 'none' : 'flex'" *ngIf="!showAuthLinks">
+          <i class="fa-brands fa-twitter"></i>
+          <i class="fa-brands fa-instagram"></i>
+          <i class="fa-brands fa-linkedin"></i>
+          <i class="fa-brands fa-facebook"></i>
+          <i class="fa-brands fa-youtube"></i>
+        </li>
+        <li *ngIf="!showAuthLinks"><a (click)="logout()" class="cursor-pointer font-semibold hover:text-green-400 transition-all duration-100 " [class.log]="isMenuOpen">Log Out</a></li>
+        <li *ngIf="showAuthLinks"><a routerLink="/register" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75 ">Register</a></li>
+        <li *ngIf="showAuthLinks"><a routerLink="/login" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75 ">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

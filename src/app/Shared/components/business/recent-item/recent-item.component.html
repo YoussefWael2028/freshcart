@@ -1,0 +1,8 @@
+<div class="flex flex-wrap full ">
+@for (product of products; track $index) {
+<div class="sm:w-1/2 md:w-1/3 lg:w-1/5 p-2">
+    <app-product-item (productIdEmitter)="$event" [callingApi]="callingApi" [calledId]="calledId" [product]="product"/>
+</div>
+}
+
+</div>
