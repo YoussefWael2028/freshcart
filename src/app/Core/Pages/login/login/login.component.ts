@@ -2,7 +2,7 @@ import { AuthService } from '../../../../Shared/services/auth/auth.service';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,14 +13,14 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
- 
+
   LoginForm: FormGroup;
   apiErrorMessage: string = '';
   callingAPI: boolean = false;
 
   constructor(
     private fb: FormBuilder,
-    private _authService: AuthService, 
+    private _authService: AuthService,
     private router: Router
   ) {
     this.LoginForm = this.fb.group({
@@ -44,9 +44,9 @@ export class LoginComponent {
         },
         (err) => {
           console.error(err);
-          this.apiErrorMessage = 'An error occurred. Please try again.';
+          this.apiErrorMessage = err?.error?.message || 'An error occurred. Please try again.';
           this.callingAPI = false;
-        }
+          }
       );
     }
   }

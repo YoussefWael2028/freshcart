@@ -4,12 +4,13 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./Shared/layout/navbar/navbar.component";
 import { FooterComponent } from './Shared/layout/footer/footer.component';
 import { OnInit } from '@angular/core';
+import { ToastComponent } from './Shared/components/ui/toast/toast/toast.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FooterComponent, NavbarComponent],
+  imports: [RouterOutlet, FooterComponent, NavbarComponent, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this._flowbiteService.loadFlowbite(flowbite => {
-    
+
       console.log('Flowbite loaded', flowbite);
     });
   }

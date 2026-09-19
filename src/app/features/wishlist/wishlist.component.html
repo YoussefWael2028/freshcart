@@ -1,0 +1,35 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-4xl font-bold text-gray-800 mb-8">My wish List</h1>
+
+  @if (isLoading) {
+    <div class="flex justify-center items-center py-20">
+      <i class="fa fa-spin fa-spinner text-4xl text-green-600"></i>
+    </div>
+  } @else if (wishlistItems.length === 0) {
+    <p class="text-gray-500 text-lg">Your wishlist is empty.</p>
+  } @else {
+    @for (item of wishlistItems; track item.id) {
+      <div class="flex items-center gap-6 border-b border-gray-200 py-6">
+        <img [src]="item.imageCover" [alt]="item.title" class="w-32 h-32 object-contain" />
+
+        <div class="flex-1">
+          <h5 class="text-xl font-semibold text-gray-900">{{item.title}}</h5>
+          <p class="text-green-600 font-bold mt-1">{{item.price}} EGP</p>
+          <button (click)="removeItem(item.id)" class="text-red-600 mt-2 flex items-center gap-1 hover:underline">
+            <i class="fa fa-trash"></i> Remove
+          </button>
+        </div>
+
+        <button
+          (click)="addToCart(item.id)"
+          class="border border-green-500 text-green-600 rounded-lg px-6 py-3 hover:bg-green-50 transition-colors">
+          @if (callingApi && calledId === item.id) {
+            <i class="fa fa-spin fa-spinner"></i>
+          } @else {
+            add To Cart
+          }
+        </button>
+      </div>
+    }
+  }
+</div>

@@ -5,7 +5,7 @@ import { Product } from '../../../products';
 import { CommonModule } from '@angular/common';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { CartService } from '../../../Shared/services/cart/cart.service';
-import { log } from 'console';
+import { ToastService } from '../../../Shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-product-details',
@@ -43,8 +43,8 @@ export class ProductDetailsComponent {
   ProductDetails!:Product
   productId!:string
   callingAPI: boolean = false;
-  constructor(private _activatedRoute: ActivatedRoute, private _productsService:ProductsService,private readonly _cartservice:CartService) {
-    this._activatedRoute.params.subscribe({ 
+  constructor(private _activatedRoute: ActivatedRoute, private _productsService:ProductsService,private readonly _cartservice:CartService,private _toastService:ToastService)  {
+    this._activatedRoute.params.subscribe({
       next: (res: any) => {
         this.productId = res.id;
       }
@@ -54,7 +54,7 @@ export class ProductDetailsComponent {
   ngOnInit() {
     this.getProductDetails();
   }
-  
+
   getProductDetails() {
     this._productsService.getProduct(this.productId).subscribe({
       next: (res) => {
@@ -63,18 +63,19 @@ export class ProductDetailsComponent {
       }
     });
   }
-  addToCart(id: string) {
-    if(this.callingAPI)return;
-    this.callingAPI=true
-    this._cartservice.addProductToCart(id).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error:(err)=>{
-        console.log(err);
-        this.callingAPI=false;
-      },
-    });
-  }
-  
+addToCart(id: string) {
+  if(this.callingAPI) return;
+  this.callingAPI = true;
+  this._cartservice.addProductToCart(id).subscribe({
+    next: (res) => {
+      this.callingAPI = false;
+      this._toastService.show('It has been successfully added.', '🚚');
+    },
+    error: (err) => {
+      console.error(err);
+      this.callingAPI = false;
+    },
+  });
+}
+
 }

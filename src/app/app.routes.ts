@@ -12,6 +12,7 @@ import { OrderComponent } from './features/order/order.component';
 import { RegisterComponent } from './Core/Pages/register/register/register.component';
 import { LoginComponent } from './Core/Pages/login/login/login.component';
 import { ForgotPasswordComponent } from './Core/Pages/forgot-password/forgot-password.component';
+import { WishlistComponent } from './features/wishlist/wishlist.component';
 
 
 export const routes: Routes = [
@@ -27,5 +28,6 @@ export const routes: Routes = [
   {path:"register",component:RegisterComponent},
   {path:"login",component:LoginComponent},
   {path:"forgotPassword",component:ForgotPasswordComponent},
+  {path:"wishlist",component:WishlistComponent},
   {path:"**",component:NotFoundComponent},
 ];

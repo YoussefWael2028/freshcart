@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../Shared/services/cart/cart.service';
-import { Cart } from '../../cart';
+import { Cart, cartProducts } from '../../cart';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,7 +22,6 @@ export class CartComponent implements OnInit {
   getCartInfo() {
     this._cartService.getCartInfo().subscribe({
       next: (res) => {
-        console.log(res);
         this.cartInfo = res;
       },
       error: (err) => {
@@ -34,11 +33,36 @@ export class CartComponent implements OnInit {
   removeItem(id: string) {
     this._cartService.DeleteProduct(id).subscribe({
       next: (res) => {
-        console.log(res);
         this.cartInfo = res;
       },
       error: (err) => {
         console.error('Error removing item:', err);
+      }
+    });
+  }
+
+  increaseCount(item: cartProducts) {
+    this._cartService.updateProductCount(item.product.id, item.count + 1).subscribe({
+      next: (res) => {
+        this.cartInfo = res;
+      },
+      error: (err) => {
+        console.error('Error increasing product count:', err);
+      }
+    });
+  }
+
+  decreaseCount(item: cartProducts) {
+    if (item.count === 1) {
+      this.removeItem(item.product.id);
+      return;
+    }
+    this._cartService.updateProductCount(item.product.id, item.count - 1).subscribe({
+      next: (res) => {
+        this.cartInfo = res;
+      },
+      error: (err) => {
+        console.error('Error decreasing product count:', err);
       }
     });
   }

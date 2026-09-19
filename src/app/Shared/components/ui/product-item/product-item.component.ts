@@ -10,16 +10,21 @@ import { RouterLink } from '@angular/router';
   styleUrl: './product-item.component.css'
 })
 export class ProductItemComponent {
- 
+
 @Input() product !:Product;
 @Input()callingApi !:boolean;
 @Input()calledId !:string;
+@Input() isWishlisted !:boolean;
 
+@Output() wishlistIdEmitter: EventEmitter<string> = new EventEmitter<string>();
+@Output() productIdEmitter: EventEmitter<string> = new EventEmitter<string>();
 
-@Output() productIdEmitter: EventEmitter<string> = new EventEmitter();
 
 addToCart(id: string) {
   this.productIdEmitter.emit(id);
 }
 
+toggleWishlist(id: string){
+  this.wishlistIdEmitter.emit(id)
+}
 }

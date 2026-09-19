@@ -8,6 +8,7 @@
     <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="md:flex md:w-auto ml-auto ms-10">
     <ul class="flex gap-2  text-sm font-semibold text-gray-400" [class.active]="isMenuOpen"*ngIf="!showAuthLinks">
         <li><a routerLink="/home" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75"> Home</a></li>
+        <li><a routerLink="/wishlist" routerLinkActive="text-green-600" class="me-1 hover:text-green-600 transition-all duration-75">WishList</a></li>
         <li><a routerLink="/cart" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Cart</a></li>
         <li><a routerLink="/products" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Products</a></li>
         <li><a routerLink="/brands" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Brands</a></li>
@@ -22,13 +23,14 @@
     <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="md:flex md:w-auto ml-auto">
       <ul class="flex flex-col md:flex-row items-center gap-3 p-4 md:p-0  border border-gray-100 text-sm">
 
-        <li class="flex gap-3" [style.display]="isMenuOpen ? 'none' : 'flex'" *ngIf="!showAuthLinks">
-          <i class="fa-brands fa-twitter"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-linkedin"></i>
-          <i class="fa-brands fa-facebook"></i>
-          <i class="fa-brands fa-youtube"></i>
-        </li>
+       <li *ngIf="!showAuthLinks">
+  <a routerLink="/cart" class="relative flex items-center hover:text-green-500 transition-all duration-75">
+    <i class="fa fa-cart-shopping text-xl"></i>
+    <span class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+      {{ cartCount$ | async }}
+    </span>
+  </a>
+</li>
         <li *ngIf="!showAuthLinks"><a (click)="logout()" class="cursor-pointer font-semibold hover:text-green-400 transition-all duration-100 " [class.log]="isMenuOpen">Log Out</a></li>
         <li *ngIf="showAuthLinks"><a routerLink="/register" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75 ">Register</a></li>
         <li *ngIf="showAuthLinks"><a routerLink="/login" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75 ">Login</a></li>
