@@ -38,21 +38,15 @@
             A valid phone number is required.
           </div>
     </div>
-    <div class="flex items-center">
-      <button type="submit" [ngClass]="{'bg-green-400 text-white': registerForm.valid, 'bg-white text-gray-400 border border-black': !registerForm.valid}" class="mt-8 absolute right-0 py-2 px-4 font-medium rounded-lg hover:bg-green-500 hover:text-white hover:border-none  focus:outline-none transition-all">
-        @if (callingAPI) {
-          <i class="fa fa-spin fa-spinner"></i>
-        } @else {
-          register
-        }
-      </button>
-      <p class="text-sm font-light text-gray-500 dark:text-gray-400 ms-5">
-        You already have an account?
-        <a routerLink="/login" routerLinkActive="router-link-active" class="font-medium text-primary-600 hover:underline dark:text-primary-500">
-          login
-        </a>
-      </p>
-    </div>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-8">
+  <p class="text-sm font-light text-gray-500 order-2 sm:order-1">
+    You already have an account?
+    <a routerLink="/login" routerLinkActive="router-link-active" class="font-medium text-primary-600 hover:underline">login</a>
+  </p>
+  <button type="submit" [ngClass]="{'bg-green-400 text-white': registerForm.valid, 'bg-white text-gray-400 border border-black': !registerForm.valid}" class="py-2 px-4 font-medium rounded-lg hover:bg-green-500 hover:text-white hover:border-none focus:outline-none transition-all order-1 sm:order-2">
+    @if (callingAPI) { <i class="fa fa-spin fa-spinner"></i> } @else { register }
+  </button>
+</div>
 
     </form >
   </div>

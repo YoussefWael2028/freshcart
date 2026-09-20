@@ -1,39 +1,56 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<nav class="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 w-full z-50 ">
-  <div class="max-w-screen-xl flex flex-wrap items-center mx-auto px-4">
+<nav class="bg-white border-gray-200 dark:bg-gray-900 fixed top-0 w-full z-50 shadow-sm">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-3">
     <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="assets/imgs/product-icon.jpg" class="h-10" alt="FreshCart Logo" />
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">FreshCart</span>
     </a>
-    <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="md:flex md:w-auto ml-auto ms-10">
-    <ul class="flex gap-2  text-sm font-semibold text-gray-400" [class.active]="isMenuOpen"*ngIf="!showAuthLinks">
+
+    <div class="hidden md:flex md:w-auto ms-10" *ngIf="!showAuthLinks">
+      <ul class="flex gap-2 text-sm font-semibold text-gray-400">
         <li><a routerLink="/home" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75"> Home</a></li>
         <li><a routerLink="/wishlist" routerLinkActive="text-green-600" class="me-1 hover:text-green-600 transition-all duration-75">WishList</a></li>
         <li><a routerLink="/cart" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Cart</a></li>
         <li><a routerLink="/products" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Products</a></li>
         <li><a routerLink="/brands" routerLinkActive="text-green-400" class="me-1 hover:text-green-400 transition-all duration-75">Brands</a></li>
-    </ul>
+      </ul>
     </div>
-    <button type="button" class="inline-flex absolute right-0 items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" (click)="toggleMenu()">
-      <span class="sr-only">Open main menu</span>
-      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-      </svg>
-    </button>
-    <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="md:flex md:w-auto ml-auto">
-      <ul class="flex flex-col md:flex-row items-center gap-3 p-4 md:p-0  border border-gray-100 text-sm">
 
-       <li *ngIf="!showAuthLinks">
-  <a routerLink="/cart" class="relative flex items-center hover:text-green-500 transition-all duration-75">
-    <i class="fa fa-cart-shopping text-xl"></i>
-    <span class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-      {{ cartCount$ | async }}
-    </span>
-  </a>
-</li>
-        <li *ngIf="!showAuthLinks"><a (click)="logout()" class="cursor-pointer font-semibold hover:text-green-400 transition-all duration-100 " [class.log]="isMenuOpen">Log Out</a></li>
-        <li *ngIf="showAuthLinks"><a routerLink="/register" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75 ">Register</a></li>
-        <li *ngIf="showAuthLinks"><a routerLink="/login" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75 ">Login</a></li>
+    <div class="flex items-center gap-4 md:ml-auto">
+      <a *ngIf="!showAuthLinks" routerLink="/cart" class="relative flex items-center hover:text-green-500 transition-all duration-75">
+        <i class="fa fa-cart-shopping text-xl"></i>
+        <span class="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          {{ cartCount$ | async }}
+        </span>
+      </a>
+
+      <ul *ngIf="showAuthLinks" class="hidden md:flex items-center gap-4 text-sm">
+        <li><a routerLink="/register" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75">Register</a></li>
+        <li><a routerLink="/login" routerLinkActive="text-green-400" class="font-semibold hover:text-green-400 transition-all duration-75">Login</a></li>
+      </ul>
+
+      <a *ngIf="!showAuthLinks" (click)="logout()" class="hidden md:block cursor-pointer font-semibold hover:text-green-400 transition-all duration-100">Log Out</a>
+
+      <button type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black" (click)="toggleMenu()">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
+    </div>
+
+    <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="w-full md:hidden mt-3 border-t border-gray-100 pt-3">
+      <ul *ngIf="!showAuthLinks" class="flex flex-col gap-3 text-sm font-semibold text-gray-500">
+        <li><a routerLink="/home" routerLinkActive="text-green-400" (click)="toggleMenu()">Home</a></li>
+        <li><a routerLink="/wishlist" routerLinkActive="text-green-600" (click)="toggleMenu()">WishList</a></li>
+        <li><a routerLink="/cart" routerLinkActive="text-green-400" (click)="toggleMenu()">Cart</a></li>
+        <li><a routerLink="/products" routerLinkActive="text-green-400" (click)="toggleMenu()">Products</a></li>
+        <li><a routerLink="/brands" routerLinkActive="text-green-400" (click)="toggleMenu()">Brands</a></li>
+        <li><a (click)="logout()" class="cursor-pointer">Log Out</a></li>
+      </ul>
+      <ul *ngIf="showAuthLinks" class="flex flex-col gap-3 text-sm font-semibold">
+        <li><a routerLink="/register" routerLinkActive="text-green-400" (click)="toggleMenu()">Register</a></li>
+        <li><a routerLink="/login" routerLinkActive="text-green-400" (click)="toggleMenu()">Login</a></li>
       </ul>
     </div>
   </div>
