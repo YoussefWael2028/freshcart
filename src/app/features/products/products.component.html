@@ -1,10 +1,27 @@
-<div class="container mx-auto px-4 pt-8">
+@if (isLoading) {
+  <div class="flex justify-center items-center py-20">
+    <i class="fa fa-spin fa-spinner text-4xl text-green-600"></i>
+  </div>
+} @else if (products.length === 0) {
+  <div class="container mx-auto px-4 py-20 text-center">
+    <p class="text-gray-500 text-lg">
+      No products found@if (selectedBrandName) { for <strong>{{selectedBrandName}}</strong> }.
+    </p>
+    @if (selectedBrandName) {
+      <a routerLink="/products" class="text-green-600 hover:underline mt-2 inline-block">View all products</a>
+    }
+  </div>
+} @else {
+  <div class="container mx-auto px-4 pt-4 flex items-center gap-3">
+    <span class="text-gray-600">Showing: <strong>{{selectedBrandName}}</strong></span>
+    <a routerLink="/products" class="text-green-600 hover:underline text-sm">Clear filter</a>
+  </div>
+}
   <input
     type="text"
     placeholder="search...."
     (input)="onSearch($any($event.target).value)"
     class="w-full max-w-3xl mx-auto block border border-gray-300 rounded-lg px-4 py-3 mb-8 focus:outline-none focus:ring-2 focus:ring-green-500" />
-</div>
 @if (isLoading) {
   <div class="flex justify-center items-center py-20">
     <i class="fa fa-spin fa-spinner text-4xl text-green-600"></i>

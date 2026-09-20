@@ -65,9 +65,7 @@ a,a:hover {
 .btn:hover{
   @apply bg-green-400
 }
-.full{
-  width: 98vw;
-}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

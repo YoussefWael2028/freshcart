@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Brand } from '../../brands';
 import { BrandsService } from '../../Shared/services/brands/brands.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-brands',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink,RouterLinkActive],
   templateUrl: './brands.component.html',
   styleUrl: './brands.component.css'
 })

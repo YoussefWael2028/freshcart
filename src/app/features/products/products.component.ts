@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductsService } from '../../Shared/services/Products/products.service';
 import { CartService } from '../../Shared/services/cart/cart.service';
 import { WishlistService } from '../../Shared/services/wishlist/wishlist.service';
+import { ToastService } from '../../Shared/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
 import { ProductItemComponent } from '../../Shared/components/ui/product-item/product-item.component';
 import { Product } from '../../products';
-import { ToastService } from '../../Shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, ProductItemComponent],
+  imports: [CommonModule, ProductItemComponent, RouterLink],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
@@ -21,25 +22,20 @@ export class ProductsComponent implements OnInit {
   callingApi = false;
   calledId = '';
   wishlistIds: string[] = [];
+  selectedBrandName: string | null = null;
 
   constructor(
     private productsService: ProductsService,
     private cartService: CartService,
     private wishlistService: WishlistService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.productsService.getAllProducts().subscribe({
-      next: (res) => {
-        this.allProducts = res.data;
-        this.products = res.data;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.isLoading = false;
-        console.error(err);
-      }
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.selectedBrandName = params['name'] ?? null;
+      this.fetchProducts(params['brand']);
     });
 
     this.wishlistService.getWishlist().subscribe({
@@ -47,6 +43,21 @@ export class ProductsComponent implements OnInit {
         this.wishlistIds = res.data.map((product: any) => product.id);
       },
       error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  fetchProducts(brandId?: string): void {
+    this.isLoading = true;
+    this.productsService.getAllProducts(brandId).subscribe({
+      next: (res) => {
+        this.allProducts = res.data;
+        this.products = res.data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.isLoading = false;
         console.error(err);
       }
     });
